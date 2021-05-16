@@ -1,0 +1,87 @@
+In archive libtime0.a:
+
+time0.o:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  00000034  2**0
+                  ALLOC
+  3 .text.timer0DelayMs 0000005c  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  4 .text.ISR     00000028  00000000  00000000  00000090  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  5 .text.timer0InteruptInit 00000016  00000000  00000000  000000b8  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .bss.ms       00000004  00000000  00000000  000000ce  2**0
+                  ALLOC
+
+Disassembly of section .text.timer0DelayMs:
+
+00000000 <timer0DelayMs>:
+   0:	ef 92       	push	r14
+   2:	ff 92       	push	r15
+   4:	0f 93       	push	r16
+   6:	1f 93       	push	r17
+   8:	7b 01       	movw	r14, r22
+   a:	8c 01       	movw	r16, r24
+   c:	20 91 00 00 	lds	r18, 0x0000
+  10:	30 91 00 00 	lds	r19, 0x0000
+  14:	40 91 00 00 	lds	r20, 0x0000
+  18:	50 91 00 00 	lds	r21, 0x0000
+  1c:	80 91 00 00 	lds	r24, 0x0000
+  20:	90 91 00 00 	lds	r25, 0x0000
+  24:	a0 91 00 00 	lds	r26, 0x0000
+  28:	b0 91 00 00 	lds	r27, 0x0000
+  2c:	82 1b       	sub	r24, r18
+  2e:	93 0b       	sbc	r25, r19
+  30:	a4 0b       	sbc	r26, r20
+  32:	b5 0b       	sbc	r27, r21
+  34:	8e 15       	cp	r24, r14
+  36:	9f 05       	cpc	r25, r15
+  38:	a0 07       	cpc	r26, r16
+  3a:	b1 07       	cpc	r27, r17
+  3c:	00 f0       	brcs	.+0      	; 0x3e <timer0DelayMs+0x3e>
+  3e:	20 91 00 00 	lds	r18, 0x0000
+  42:	30 91 00 00 	lds	r19, 0x0000
+  46:	40 91 00 00 	lds	r20, 0x0000
+  4a:	50 91 00 00 	lds	r21, 0x0000
+  4e:	b9 01       	movw	r22, r18
+  50:	ca 01       	movw	r24, r20
+  52:	1f 91       	pop	r17
+  54:	0f 91       	pop	r16
+  56:	ff 90       	pop	r15
+  58:	ef 90       	pop	r14
+  5a:	08 95       	ret
+
+Disassembly of section .text.ISR:
+
+00000000 <ISR>:
+   0:	80 91 00 00 	lds	r24, 0x0000
+   4:	90 91 00 00 	lds	r25, 0x0000
+   8:	a0 91 00 00 	lds	r26, 0x0000
+   c:	b0 91 00 00 	lds	r27, 0x0000
+  10:	01 96       	adiw	r24, 0x01	; 1
+  12:	a1 1d       	adc	r26, r1
+  14:	b1 1d       	adc	r27, r1
+  16:	80 93 00 00 	sts	0x0000, r24
+  1a:	90 93 00 00 	sts	0x0000, r25
+  1e:	a0 93 00 00 	sts	0x0000, r26
+  22:	b0 93 00 00 	sts	0x0000, r27
+  26:	08 95       	ret
+
+Disassembly of section .text.timer0InteruptInit:
+
+00000000 <timer0InteruptInit>:
+   0:	82 e0       	ldi	r24, 0x02	; 2
+   2:	84 bd       	out	0x24, r24	; 36
+   4:	93 e0       	ldi	r25, 0x03	; 3
+   6:	95 bd       	out	0x25, r25	; 37
+   8:	99 ef       	ldi	r25, 0xF9	; 249
+   a:	97 bd       	out	0x27, r25	; 39
+   c:	80 93 6e 00 	sts	0x006E, r24
+  10:	0e 94 00 00 	call	0	; 0x0 <timer0InteruptInit>
+  14:	08 95       	ret
